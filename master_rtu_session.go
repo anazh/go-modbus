@@ -39,8 +39,6 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		fmt.Println("rspPduData:", rspPduData)
 	} else {
 		err = &ExceptionError{ExceptionCodeIllegalFunction}
-	}
-	if err != nil {
 		fmt.Printf("err:%v\n", err)
 		funcCode |= 0x80
 		rspPduData = []byte{err.(*ExceptionError).ExceptionCode}
@@ -52,6 +50,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		funcCode,
 		rspPduData,
 	})
+	fmt.Printf("responseAdu:%v\n", responseAdu)
 	if err != nil {
 		fmt.Printf("encodeRTUFrame error:%v", err)
 		sf.Errorf("encodeRTUFrame error:%v", err)

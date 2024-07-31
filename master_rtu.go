@@ -24,14 +24,13 @@ func (m *RtuMaster) Connect() error {
 	if err := m.conn.Connect(); err != nil {
 		return err
 	}
-	if err := m.conn.port.SetReadTimeout(m.conn.TimeOut); err != nil {
-		return err
-	}
 	fmt.Println("Connected to ", m.conn.ComName, m.conn.TimeOut)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
-	buff := make([]byte, rtuAduMaxSize)
+	buff := []byte{}
 	for {
-		m.conn.port.SetReadTimeout(1000 * time.Millisecond)
+		allLen := 0
+	reget:
+		newBuff := make([]byte, rtuAduMaxSize)
 		n, err := m.conn.port.Read(buff)
 		if err != nil {
 			if ne, ok := err.(net.Error); ok && ne.Temporary() {
@@ -44,18 +43,21 @@ func (m *RtuMaster) Connect() error {
 			}
 			return err
 		}
-		if n == 0 {
-			continue
+		if n != 0 {
+			allLen += n
+			buff = append(buff, newBuff[:n]...)
+			goto reget
 		}
-		newBuff := buff[:n]
-		buff = make([]byte, rtuAduMaxSize)
-		fmt.Printf("received [% x]\n", newBuff)
+
+		data := buff[:allLen]
+		buff = []byte{}
+		fmt.Printf("received [% x]\n", data)
 		tempDelay = minTempDelay
 		sess := &MasterSession{
 			m.conn.port,
 			m.serverCommon,
 			m.logger,
 		}
-		sess.frameHandler(newBuff)
+		sess.frameHandler(data)
 	}
 }

@@ -32,6 +32,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	funcCode := pdu[1]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it
+		fmt.Println("slave id not exit, ignore it")
 		return nil
 	}
 	var rspPduData []byte
@@ -41,6 +42,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		err = &ExceptionError{ExceptionCodeIllegalFunction}
 	}
 	if err != nil {
+		fmt.Printf("err:%v\n", err)
 		funcCode |= 0x80
 		rspPduData = []byte{err.(*ExceptionError).ExceptionCode}
 	}
@@ -52,6 +54,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		rspPduData,
 	})
 	if err != nil {
+		fmt.Printf("encodeRTUFrame error:%v", err)
 		sf.Errorf("encodeRTUFrame error:%v", err)
 		return err
 	}

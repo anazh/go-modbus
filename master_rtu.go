@@ -31,7 +31,7 @@ func (m *RtuMaster) Connect() error {
 		allLen := 0
 	reget:
 		newBuff := make([]byte, rtuAduMaxSize)
-		n, err := m.conn.port.Read(buff)
+		n, err := m.conn.port.Read(newBuff)
 		if err != nil {
 			if ne, ok := err.(net.Error); ok && ne.Temporary() {
 				tempDelay <<= 1
@@ -46,10 +46,13 @@ func (m *RtuMaster) Connect() error {
 		if n != 0 {
 			allLen += n
 			buff = append(buff, newBuff[:n]...)
-			goto reget
+			if allLen < rtuAduMinSize {
+				goto reget
+			}
 		} else if allLen == 0 {
 			continue
 		}
+		// ---------------------------
 		data := buff[:allLen]
 		buff = []byte{}
 		fmt.Printf("received [% x]\n", data)

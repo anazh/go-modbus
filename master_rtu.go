@@ -41,6 +41,9 @@ func (m *RtuMaster) Connect() error {
 			}
 			return err
 		}
+		if n == 0 {
+			continue
+		}
 		buff = buff[:n]
 		m.logger.Debugf("received [% x]", buff)
 		fmt.Printf("received [% x]\n", buff)

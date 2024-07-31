@@ -36,9 +36,11 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	var rspPduData []byte
 	if handle, ok := sf.function[funcCode]; ok {
 		rspPduData, err = handle(node, pdu)
-		fmt.Println("rspPduData:", rspPduData)
+		fmt.Printf("rspPduData:%s err:%v\n", rspPduData, err)
 	} else {
 		err = &ExceptionError{ExceptionCodeIllegalFunction}
+	}
+	if err != nil {
 		fmt.Printf("err:%v\n", err)
 		funcCode |= 0x80
 		rspPduData = []byte{err.(*ExceptionError).ExceptionCode}

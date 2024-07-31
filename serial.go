@@ -37,7 +37,7 @@ func (sf *serialPort) connect() error {
 	if sf.port == nil {
 		port, err := serial.Open(sf.ComName, &sf.Mode)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to open serial port: %s err %v", sf.ComName, err)
 		}
 		port.SetReadTimeout(sf.TimeOut)
 		sf.port = port

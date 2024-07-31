@@ -145,7 +145,7 @@ func (sf *RTUClientProvider) SendRawFrame(aduRequest []byte) (aduResponse []byte
 	var data [rtuAduMaxSize]byte
 	// We first read the minimum length and then read either the full package
 	// or the error package, depending on the error status (byte 2 of the response)
-	n, err = io.ReadAtLeast(sf.port, data[:], rtuAduMinSize)
+	n, err = sf.port.Read(data[:])
 	if err != nil {
 		return
 	}

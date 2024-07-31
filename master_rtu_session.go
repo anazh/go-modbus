@@ -46,7 +46,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		funcCode |= 0x80
 		rspPduData = []byte{err.(*ExceptionError).ExceptionCode}
 	}
-	fmt.Println("2")
+	fmt.Println("22222")
 	sfv := protocolFrame{
 		adu: []byte{},
 	}

@@ -1,7 +1,6 @@
 package modbus
 
 import (
-	"io"
 	"sync"
 	"time"
 
@@ -16,8 +15,9 @@ type serialPort struct {
 	ComName string
 	// Serial port configuration.
 	serial.Mode
-	mu   sync.Mutex
-	port io.ReadWriteCloser
+	mu      sync.Mutex
+	port    serial.Port
+	TimeOut time.Duration
 }
 
 // Connect try to connect the remote server
@@ -35,6 +35,7 @@ func (sf *serialPort) connect() error {
 		if err != nil {
 			return err
 		}
+		port.SetReadTimeout(sf.TimeOut)
 		sf.port = port
 	}
 	return nil
@@ -54,7 +55,9 @@ func (sf *serialPort) setSerialConfig(commName string, config serial.Mode) {
 	sf.ComName = commName
 }
 
-func (sf *serialPort) setTCPTimeout(time.Duration) {}
+func (sf *serialPort) setTimeout(t time.Duration) {
+	sf.TimeOut = t
+}
 
 func (sf *serialPort) close() (err error) {
 	if sf.port != nil {

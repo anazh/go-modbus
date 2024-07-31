@@ -213,7 +213,7 @@ type ClientProvider interface {
 	// setSerialConfig set serial config
 	setSerialConfig(commName string, config serial.Mode)
 	// setTCPTimeout set tcp connect & read timeout
-	setTCPTimeout(t time.Duration)
+	setTimeout(t time.Duration)
 }
 
 // LogProvider RFC5424 log message levels only Debug and Error

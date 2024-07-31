@@ -1,5 +1,10 @@
 package modbus
 
+import (
+	"net"
+	"time"
+)
+
 type RtuMaster struct {
 	conn *RTUClientProvider
 	*serverCommon
@@ -15,12 +20,32 @@ func NewRtuMaster(r *RTUClientProvider) *RtuMaster {
 }
 
 func (m *RtuMaster) Connect() error {
-	m.conn.mu.Lock()
-	defer m.conn.mu.Unlock()
-	err := m.conn.serialPort.connect()
-	if err != nil {
+	if err := m.conn.Connect(); err != nil {
 		return err
 	}
-	
+	var tempDelay = minTempDelay // how long to sleep on accept failure
+	for {
+		buff := make([]byte, rtuAduMaxSize)
+		n, err := m.conn.port.Read(buff)
+		if err != nil {
+			if ne, ok := err.(net.Error); ok && ne.Temporary() {
+				tempDelay <<= 1
+				if max := 1 * time.Second; tempDelay > max {
+					tempDelay = max
+				}
+				time.Sleep(tempDelay)
+				continue
+			}
+			return err
+		}
+		buff = buff[:n]
 
+		tempDelay = minTempDelay
+		sess := &MasterSession{
+			m.conn.port,
+			m.serverCommon,
+			m.logger,
+		}
+		sess.frameHandler(buff)
+	}
 }

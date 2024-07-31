@@ -33,7 +33,7 @@ func (*provider) SendRawFrame([]byte) (aduResponse []byte, err error) {
 }
 func (*provider) setLogProvider(LogProvider)          {}
 func (*provider) setSerialConfig(string, serial.Mode) {}
-func (*provider) setTCPTimeout(time.Duration)         {}
+func (*provider) setTimeout(time.Duration)         {}
 
 func Test_client_ReadCoils(t *testing.T) {
 	type args struct {

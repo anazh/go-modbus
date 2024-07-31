@@ -25,7 +25,7 @@ func (m *RtuMaster) Connect() error {
 		return err
 	}
 	fmt.Println("Connected to ", m.conn.ComName)
-	m.logger.Debugf("connected to %s", m.conn.ComName)
+	m.logger.provider.Debugf("connected to %s", m.conn.ComName)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	for {
 		buff := make([]byte, rtuAduMaxSize)
@@ -43,6 +43,7 @@ func (m *RtuMaster) Connect() error {
 		}
 		buff = buff[:n]
 		m.logger.Debugf("received [% x]", buff)
+		fmt.Printf("received [% x]\n", buff)
 		tempDelay = minTempDelay
 		sess := &MasterSession{
 			m.conn.port,

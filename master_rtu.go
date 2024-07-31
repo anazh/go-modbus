@@ -31,6 +31,7 @@ func (m *RtuMaster) Connect() error {
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	buff := make([]byte, rtuAduMaxSize)
 	for {
+		m.conn.port.SetReadTimeout(1000 * time.Millisecond)
 		n, err := m.conn.port.Read(buff)
 		if err != nil {
 			if ne, ok := err.(net.Error); ok && ne.Temporary() {

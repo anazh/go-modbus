@@ -1,6 +1,5 @@
 # go modbus
-## NOTE: Archived, not maintain.
-## NOTE: 已归档, 不再维护, 放弃License. 有需要的可以自由分发
+## NOTE: 在原有基础上实现master rtu
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
 [![GoDoc](https://godoc.org/ github.com/anazh/go-modbus?status.svg)](https://godoc.org/ github.com/anazh/go-modbus)
@@ -15,6 +14,7 @@ modbus write in pure go, support rtu,ascii,tcp master library,also support tcp s
 
 ### Supported formats
 
+- modbus Serial(RTU) master
 - modbus Serial(RTU,ASCII) Client
 - modbus TCP Client
 - modbus TCP Server

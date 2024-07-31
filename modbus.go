@@ -52,7 +52,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/goburrow/serial"
+	"go.bug.st/serial"
 )
 
 // proto address limit.
@@ -211,7 +211,7 @@ type ClientProvider interface {
 	// setLogProvider set logger provider
 	setLogProvider(p LogProvider)
 	// setSerialConfig set serial config
-	setSerialConfig(config serial.Config)
+	setSerialConfig(commName string, config serial.Mode)
 	// setTCPTimeout set tcp connect & read timeout
 	setTCPTimeout(t time.Duration)
 }

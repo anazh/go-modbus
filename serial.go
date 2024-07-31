@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/goburrow/serial"
+	"go.bug.st/serial"
 )
 
 // SerialDefaultTimeout Serial Default timeout
@@ -13,8 +13,9 @@ const SerialDefaultTimeout = 1 * time.Second
 
 // serialPort has configuration and I/O controller.
 type serialPort struct {
+	ComName string
 	// Serial port configuration.
-	serial.Config
+	serial.Mode
 	mu   sync.Mutex
 	port io.ReadWriteCloser
 }
@@ -30,7 +31,7 @@ func (sf *serialPort) Connect() (err error) {
 // Caller must hold the mutex before calling this method.
 func (sf *serialPort) connect() error {
 	if sf.port == nil {
-		port, err := serial.Open(&sf.Config)
+		port, err := serial.Open(sf.ComName, &sf.Mode)
 		if err != nil {
 			return err
 		}
@@ -48,8 +49,9 @@ func (sf *serialPort) IsConnected() (b bool) {
 }
 
 // setSerialConfig set serial config
-func (sf *serialPort) setSerialConfig(config serial.Config) {
-	sf.Config = config
+func (sf *serialPort) setSerialConfig(commName string, config serial.Mode) {
+	sf.Mode = config
+	sf.ComName = commName
 }
 
 func (sf *serialPort) setTCPTimeout(time.Duration) {}

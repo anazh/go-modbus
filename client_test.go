@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/goburrow/serial"
+	"go.bug.st/serial"
 )
 
 // check implements ClientProvider interface
@@ -31,9 +31,9 @@ func (*provider) SendPdu(byte, []byte) (pduResponse []byte, err error) {
 func (*provider) SendRawFrame([]byte) (aduResponse []byte, err error) {
 	return nil, nil
 }
-func (*provider) setLogProvider(LogProvider)    {}
-func (*provider) setSerialConfig(serial.Config) {}
-func (*provider) setTCPTimeout(time.Duration)   {}
+func (*provider) setLogProvider(LogProvider)          {}
+func (*provider) setSerialConfig(string, serial.Mode) {}
+func (*provider) setTCPTimeout(time.Duration)         {}
 
 func Test_client_ReadCoils(t *testing.T) {
 	type args struct {

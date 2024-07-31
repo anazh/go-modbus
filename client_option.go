@@ -3,7 +3,7 @@ package modbus
 import (
 	"time"
 
-	"github.com/goburrow/serial"
+	"go.bug.st/serial"
 )
 
 // ClientProviderOption client provider option for user.
@@ -24,9 +24,9 @@ func WithEnableLogger() ClientProviderOption {
 }
 
 // WithSerialConfig set serial config, only valid on serial.
-func WithSerialConfig(config serial.Config) ClientProviderOption {
+func WithSerialConfig(commName string, config serial.Mode) ClientProviderOption {
 	return func(p ClientProvider) {
-		p.setSerialConfig(config)
+		p.setSerialConfig(commName, config)
 	}
 }
 

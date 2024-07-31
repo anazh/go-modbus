@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/goburrow/serial"
+	"go.bug.st/serial"
 )
 
 const (
@@ -56,14 +56,15 @@ func NewTCPClientProvider(address string, opts ...ClientProviderOption) *TCPClie
 }
 
 // encode modbus application protocol header & pdu to TCP frame,return adu.
-//  ---- MBAP header ----
-//  Transaction identifier: 2 bytes
-//  Protocol identifier: 2 bytes
-//  Length: 2 bytes
-//  Unit identifier: 1 byte
-//  ---- data Unit ----
-//  Function code: 1 byte
-//  Data: n bytes
+//
+//	---- MBAP header ----
+//	Transaction identifier: 2 bytes
+//	Protocol identifier: 2 bytes
+//	Length: 2 bytes
+//	Unit identifier: 1 byte
+//	---- data Unit ----
+//	Function code: 1 byte
+//	Data: n bytes
 func (sf *protocolFrame) encodeTCPFrame(tid uint16, slaveID byte,
 	pdu ProtocolDataUnit) (protocolTCPHeader, []byte, error) {
 	length := tcpHeaderMbapSize + 1 + len(pdu.Data)
@@ -91,14 +92,15 @@ func (sf *protocolFrame) encodeTCPFrame(tid uint16, slaveID byte,
 }
 
 // decode extracts tcpHeader & PDU from TCP frame:
-//  ---- MBAP header ----
-//  Transaction identifier: 2 bytes
-//  Protocol identifier: 2 bytes
-//  Length: 2 bytes
-//  Unit identifier: 1 byte
-//  ---- data Unit ----
-//  Function        : 1 byte
-//  Data            : 0 up to 252 bytes
+//
+//	---- MBAP header ----
+//	Transaction identifier: 2 bytes
+//	Protocol identifier: 2 bytes
+//	Length: 2 bytes
+//	Unit identifier: 1 byte
+//	---- data Unit ----
+//	Function        : 1 byte
+//	Data            : 0 up to 252 bytes
 func decodeTCPFrame(adu []byte) (protocolTCPHeader, []byte, error) {
 	if len(adu) < tcpAduMinSize { // Minimum size (including MBAP, funcCode)
 		return protocolTCPHeader{}, nil, fmt.Errorf("modbus: response length '%v' does not meet minimum '%v'",
@@ -328,7 +330,7 @@ func (sf *TCPClientProvider) Close() (err error) {
 	return
 }
 
-func (sf *TCPClientProvider) setSerialConfig(serial.Config) {}
+func (sf *TCPClientProvider) setSerialConfig(string, serial.Mode) {}
 
 func (sf *TCPClientProvider) setTCPTimeout(t time.Duration) {
 	sf.timeout = t

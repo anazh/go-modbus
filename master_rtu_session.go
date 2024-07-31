@@ -17,6 +17,7 @@ type MasterSession struct {
 func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	defer func() {
 		if err := recover(); err != nil {
+			fmt.Printf("painc happen,%v\n", err)
 			sf.Errorf("painc happen,%v", err)
 		}
 	}()

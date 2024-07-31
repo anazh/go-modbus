@@ -1,6 +1,7 @@
 package modbus
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
@@ -22,6 +23,9 @@ type serialPort struct {
 
 // Connect try to connect the remote server
 func (sf *serialPort) Connect() (err error) {
+	if sf.ComName == "" {
+		return fmt.Errorf("serial port name is empty")
+	}
 	sf.mu.Lock()
 	err = sf.connect()
 	sf.mu.Unlock()

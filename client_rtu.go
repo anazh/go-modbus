@@ -42,11 +42,15 @@ func (sf *protocolFrame) encodeRTUFrame(slaveID byte, pdu ProtocolDataUnit) ([]b
 	if length > rtuAduMaxSize {
 		return nil, fmt.Errorf("modbus: length of data '%v' must not be bigger than '%v'", length, rtuAduMaxSize)
 	}
-	if length > cap(sf.adu) {
-		return nil, fmt.Errorf("modbus: length of data '%v' pdu:%v must not be bigger than '%v' adu:%v ", length, pdu.Data, cap(sf.adu), sf.adu)
-	}
-	requestAdu := sf.adu[:0:length] // 解释这里的:0:length
-	requestAdu = append(requestAdu, slaveID, pdu.FuncCode)
+	// 错的
+	// if length > cap(sf.adu) {
+	// 	return nil, fmt.Errorf("modbus: length of data '%v' pdu:%v must not be bigger than '%v' adu:%v ", length, pdu.Data, cap(sf.adu), sf.adu)
+	// }
+	// requestAdu := sf.adu[:0:length] // 解释这里的:0:length
+	// requestAdu = append(requestAdu, slaveID, pdu.FuncCode)
+	requestAdu := []byte{}
+	requestAdu = append(requestAdu, slaveID)
+	requestAdu = append(requestAdu, pdu.FuncCode)
 	requestAdu = append(requestAdu, pdu.Data...)
 	checksum := CRC16(requestAdu)
 	requestAdu = append(requestAdu, byte(checksum), byte(checksum>>8))

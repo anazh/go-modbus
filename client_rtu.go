@@ -42,6 +42,9 @@ func (sf *protocolFrame) encodeRTUFrame(slaveID byte, pdu ProtocolDataUnit) ([]b
 	if length > rtuAduMaxSize {
 		return nil, fmt.Errorf("modbus: length of data '%v' must not be bigger than '%v'", length, rtuAduMaxSize)
 	}
+	if length > cap(sf.adu) {
+		return nil, fmt.Errorf("modbus: length of data '%v' must not be bigger than '%v'", length, cap(sf.adu))
+	}
 	requestAdu := sf.adu[:0:length] // 解释这里的:0:length
 	requestAdu = append(requestAdu, slaveID, pdu.FuncCode)
 	requestAdu = append(requestAdu, pdu.Data...)

@@ -21,6 +21,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 			sf.Errorf("painc happen,%v", err)
 		}
 	}()
+	fmt.Printf("RX Raw[% x]\n", requestAdu)
 	sf.Debugf("RX Raw[% x]", requestAdu)
 	// 校验是否符合modbus-rtu协议
 	slaveId, content, err := decodeRTUFrame(requestAdu)

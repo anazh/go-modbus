@@ -29,6 +29,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		fmt.Printf("decodeRTUFrame error:%v", err)
 		return err
 	}
+	fmt.Printf("slaveId:%v, pdu:%v\n", slaveId, pdu)
 	funcCode := pdu[1]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it

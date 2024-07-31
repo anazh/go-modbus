@@ -1,7 +1,7 @@
 package main
 
 import (
-	modbus "github.com/things-go/go-modbus"
+	modbus " github.com/anazh/go-modbus"
 )
 
 func main() {

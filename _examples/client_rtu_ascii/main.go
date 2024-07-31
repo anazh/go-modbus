@@ -6,7 +6,7 @@ import (
 
 	"github.com/goburrow/serial"
 
-	modbus "github.com/things-go/go-modbus"
+	modbus " github.com/anazh/go-modbus"
 )
 
 func main() {

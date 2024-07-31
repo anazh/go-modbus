@@ -3,14 +3,14 @@
 ## NOTE: 已归档, 不再维护, 放弃License. 有需要的可以自由分发
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
-[![GoDoc](https://godoc.org/github.com/things-go/go-modbus?status.svg)](https://godoc.org/github.com/things-go/go-modbus)
-[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/things-go/go-modbus/v2?tab=doc)
+[![GoDoc](https://godoc.org/ github.com/anazh/go-modbus?status.svg)](https://godoc.org/ github.com/anazh/go-modbus)
+[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/ github.com/anazh/go-modbus/v2?tab=doc)
 [![codecov](https://codecov.io/gh/things-go/go-modbus/branch/master/graph/badge.svg)](https://codecov.io/gh/things-go/go-modbus)
-![Action Status](https://github.com/things-go/go-modbus/workflows/Go/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/things-go/go-modbus)](https://goreportcard.com/report/github.com/things-go/go-modbus)
+![Action Status](https:// github.com/anazh/go-modbus/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/ github.com/anazh/go-modbus)](https://goreportcard.com/report/ github.com/anazh/go-modbus)
 [![Licence](https://img.shields.io/github/license/things-go/go-modbus)](https://raw.githubusercontent.com/things-go/go-modbus/master/LICENSE)
-[![Tag](https://img.shields.io/github/v/tag/things-go/go-modbus)](https://github.com/things-go/go-modbus/tags)
-[![Sourcegraph](https://sourcegraph.com/github.com/things-go/go-modbus/-/badge.svg)](https://sourcegraph.com/github.com/things-go/go-modbus?badge)
+[![Tag](https://img.shields.io/github/v/tag/things-go/go-modbus)](https:// github.com/anazh/go-modbus/tags)
+[![Sourcegraph](https://sourcegraph.com/ github.com/anazh/go-modbus/-/badge.svg)](https://sourcegraph.com/ github.com/anazh/go-modbus?badge)
 
 
 ### Supported formats
@@ -30,12 +30,12 @@ modbus write in pure go, support rtu,ascii,tcp master library,also support tcp s
 
 Use go get.
 ```bash
-    go get github.com/things-go/go-modbus
+    go get  github.com/anazh/go-modbus
 ```
 
 Then import the package into your own code.
 ```bash
-    import modbus "github.com/things-go/go-modbus"
+    import modbus " github.com/anazh/go-modbus"
 ```
 
 ### Supported functions
@@ -73,7 +73,7 @@ import (
 
 	"github.com/goburrow/serial"
 
-	modbus "github.com/things-go/go-modbus"
+	modbus " github.com/anazh/go-modbus"
 )
 
 func main() {
@@ -120,7 +120,7 @@ import (
 	"fmt"
 	"time"
 
-	modbus "github.com/things-go/go-modbus"
+	modbus " github.com/anazh/go-modbus"
 )
 
 func main() {
@@ -154,7 +154,7 @@ modbus TCP server see [example](_examples/server_tcp)
 package main
 
 import (
-	modbus "github.com/things-go/go-modbus"
+	modbus " github.com/anazh/go-modbus"
 )
 
 func main() {

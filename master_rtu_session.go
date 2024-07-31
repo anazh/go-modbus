@@ -50,14 +50,10 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		funcCode,
 		rspPduData,
 	})
-	fmt.Println("3")
-	fmt.Printf("responseAdu:%v\n", responseAdu)
 	if err != nil {
-		fmt.Printf("encodeRTUFrame error:%v", err)
 		sf.Errorf("encodeRTUFrame error:%v", err)
 		return err
 	}
-	fmt.Printf("response [% x]\n", responseAdu)
 	sf.Debugf("TX Raw[% x]", responseAdu)
 	// write response
 	return func(b []byte) error {

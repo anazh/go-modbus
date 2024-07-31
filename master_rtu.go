@@ -23,6 +23,7 @@ func (m *RtuMaster) Connect() error {
 	if err := m.conn.Connect(); err != nil {
 		return err
 	}
+	m.logger.Debugf("connected to %s", m.conn.ComName)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	for {
 		buff := make([]byte, rtuAduMaxSize)

@@ -1,6 +1,8 @@
 package modbus
 
 import (
+	"fmt"
+
 	"go.bug.st/serial"
 )
 
@@ -19,10 +21,12 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		}
 	}()
 	sf.Debugf("RX Raw[% x]", requestAdu)
+	fmt.Printf("received [% x]\n", requestAdu)
 	// 校验是否符合modbus-rtu协议
 	slaveId, pdu, err := decodeRTUFrame(requestAdu)
 	if err != nil {
 		sf.Errorf("decodeRTUFrame error:%v", err)
+		fmt.Printf("decodeRTUFrame error:%v", err)
 		return err
 	}
 	funcCode := pdu[1]
@@ -51,6 +55,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		sf.Errorf("encodeRTUFrame error:%v", err)
 		return err
 	}
+	fmt.Printf("response [% x]\n", responseAdu)
 	sf.Debugf("TX Raw[% x]", responseAdu)
 	// write response
 	return func(b []byte) error {

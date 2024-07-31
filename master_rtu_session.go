@@ -30,7 +30,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		return err
 	}
 	fmt.Printf("slaveId:%v, pdu:%v\n", slaveId, pdu)
-	funcCode := pdu[1]
+	funcCode := pdu[0]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it
 		fmt.Println("slave id not exit, ignore it")

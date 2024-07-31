@@ -25,11 +25,11 @@ func (m *RtuMaster) Connect() error {
 		return err
 	}
 	fmt.Println("Connected to ", m.conn.ComName, m.conn.TimeOut)
-	m.Debugf("connected to %s %d", m.conn.ComName, m.conn.TimeOut)
+
 	m.conn.port.SetReadTimeout(m.conn.TimeOut)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
+	buff := make([]byte, rtuAduMaxSize)
 	for {
-		buff := make([]byte, rtuAduMaxSize)
 		n, err := m.conn.port.Read(buff)
 		if err != nil {
 			if ne, ok := err.(net.Error); ok && ne.Temporary() {

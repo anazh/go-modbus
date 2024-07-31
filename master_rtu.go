@@ -1,6 +1,7 @@
 package modbus
 
 import (
+	"fmt"
 	"net"
 	"time"
 )
@@ -23,6 +24,7 @@ func (m *RtuMaster) Connect() error {
 	if err := m.conn.Connect(); err != nil {
 		return err
 	}
+	fmt.Println("Connected to ", m.conn.ComName)
 	m.logger.Debugf("connected to %s", m.conn.ComName)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	for {

@@ -47,8 +47,9 @@ func (m *RtuMaster) Connect() error {
 			allLen += n
 			buff = append(buff, newBuff[:n]...)
 			goto reget
+		} else if allLen == 0 {
+			continue
 		}
-
 		data := buff[:allLen]
 		buff = []byte{}
 		fmt.Printf("received [% x]\n", data)

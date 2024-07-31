@@ -23,13 +23,14 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	}()
 	sf.Debugf("RX Raw[% x]", requestAdu)
 	// 校验是否符合modbus-rtu协议
-	slaveId, pdu, err := decodeRTUFrame(requestAdu)
+	slaveId, content, err := decodeRTUFrame(requestAdu)
 	if err != nil {
 		sf.Errorf("decodeRTUFrame error:%v", err)
 		return err
 	}
-	fmt.Printf("slaveId:%v, pdu:%v\n", slaveId, pdu)
-	funcCode := pdu[0]
+	fmt.Printf("slaveId:%v, pdu:%v\n", slaveId, content)
+	funcCode := content[0]
+	pdu := content[1:]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it
 		return nil
@@ -48,8 +49,8 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 		adu: requestAdu,
 	}
 	responseAdu, err := sfv.encodeRTUFrame(slaveId, ProtocolDataUnit{
-		funcCode,
-		rspPduData,
+		FuncCode: funcCode,
+		Data:     rspPduData,
 	})
 	if err != nil {
 		sf.Errorf("encodeRTUFrame error:%v", err)

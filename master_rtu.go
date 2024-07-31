@@ -39,7 +39,7 @@ func (m *RtuMaster) Connect() error {
 			return err
 		}
 		buff = buff[:n]
-
+		m.logger.Debugf("received [% x]", buff)
 		tempDelay = minTempDelay
 		sess := &MasterSession{
 			m.conn.port,

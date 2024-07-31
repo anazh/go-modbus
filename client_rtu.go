@@ -149,7 +149,6 @@ func (sf *RTUClientProvider) SendRawFrame(aduRequest []byte) (aduResponse []byte
 	if err != nil {
 		return
 	}
-
 	switch {
 	case data[1] == function:
 		// if the function is correct

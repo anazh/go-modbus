@@ -1,5 +1,5 @@
 # go modbus
-## NOTE: 在原有基础上实现master rtu
+## NOTE: 在原有基础(things-go/go-modbus)上实现master rtu 
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
 ### Supported formats

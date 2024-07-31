@@ -25,7 +25,7 @@ func (m *RtuMaster) Connect() error {
 		return err
 	}
 	fmt.Println("Connected to ", m.conn.ComName)
-	m.Debugf("connected to %s", m.conn.ComName)
+	m.Debugf("connected to %s %d", m.conn.ComName, m.conn.TimeOut)
 	m.conn.port.SetReadTimeout(m.conn.TimeOut)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	for {

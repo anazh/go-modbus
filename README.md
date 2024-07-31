@@ -2,16 +2,6 @@
 ## NOTE: 在原有基础上实现master rtu
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
-[![GoDoc](https://godoc.org/ github.com/anazh/go-modbus?status.svg)](https://godoc.org/ github.com/anazh/go-modbus)
-[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/ github.com/anazh/go-modbus/v2?tab=doc)
-[![codecov](https://codecov.io/gh/things-go/go-modbus/branch/master/graph/badge.svg)](https://codecov.io/gh/things-go/go-modbus)
-![Action Status](https:// github.com/anazh/go-modbus/workflows/Go/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/ github.com/anazh/go-modbus)](https://goreportcard.com/report/ github.com/anazh/go-modbus)
-[![Licence](https://img.shields.io/github/license/things-go/go-modbus)](https://raw.githubusercontent.com/things-go/go-modbus/master/LICENSE)
-[![Tag](https://img.shields.io/github/v/tag/things-go/go-modbus)](https:// github.com/anazh/go-modbus/tags)
-[![Sourcegraph](https://sourcegraph.com/ github.com/anazh/go-modbus/-/badge.svg)](https://sourcegraph.com/ github.com/anazh/go-modbus?badge)
-
-
 ### Supported formats
 
 - modbus Serial(RTU) master

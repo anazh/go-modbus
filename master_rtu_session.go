@@ -36,7 +36,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	if err != nil { // slave id not exit, ignore it
 		if sf.handlerSlaveIdNotExist != nil {
 			responseAdu, err := sf.handlerSlaveIdNotExist(requestAdu)
-			if err == nil { // write response
+			if err == nil && responseAdu != nil { // write response
 				return func(b []byte) error {
 					_, err := sf.conn.Write(b)
 					return err

@@ -34,8 +34,18 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	pdu := content[1:]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it
+		if sf.HandlerSlaveIdNotExist != nil {
+			responseAdu, err := sf.HandlerSlaveIdNotExist(requestAdu)
+			if err == nil { // write response
+				return func(b []byte) error {
+					_, err := sf.conn.Write(b)
+					return err
+				}(responseAdu)
+			}
+		}
 		return nil
 	}
+
 	var rspPduData []byte
 	if handle, ok := sf.function[funcCode]; ok {
 		rspPduData, err = handle(node, pdu)

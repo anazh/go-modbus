@@ -1,7 +1,6 @@
 package modbus
 
 import (
-	"fmt"
 	"net"
 	"time"
 )
@@ -24,7 +23,6 @@ func (m *RtuMaster) Connect() error {
 	if err := m.conn.Connect(); err != nil {
 		return err
 	}
-	fmt.Println("Connected to ", m.conn.ComName, m.conn.TimeOut)
 	var tempDelay = minTempDelay // how long to sleep on accept failure
 	buff := []byte{}
 	for {
@@ -55,7 +53,6 @@ func (m *RtuMaster) Connect() error {
 		// ---------------------------
 		data := buff[:allLen]
 		buff = []byte{}
-		fmt.Printf("received [% x]\n", data)
 		tempDelay = minTempDelay
 		sess := &MasterSession{
 			m.conn.port,

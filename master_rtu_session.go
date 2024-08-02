@@ -34,8 +34,8 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	pdu := content[1:]
 	node, err := sf.GetNode(slaveId)
 	if err != nil { // slave id not exit, ignore it
-		if sf.HandlerSlaveIdNotExist != nil {
-			responseAdu, err := sf.HandlerSlaveIdNotExist(requestAdu)
+		if sf.handlerSlaveIdNotExist != nil {
+			responseAdu, err := sf.handlerSlaveIdNotExist(requestAdu)
 			if err == nil { // write response
 				return func(b []byte) error {
 					_, err := sf.conn.Write(b)

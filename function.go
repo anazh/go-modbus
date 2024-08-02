@@ -24,7 +24,7 @@ type SlaveIdNotExistHandler func(requestAdu []byte) ([]byte, error)
 type serverCommon struct {
 	node                   sync.Map
 	function               map[uint8]FunctionHandler
-	HandlerSlaveIdNotExist SlaveIdNotExistHandler
+	handlerSlaveIdNotExist SlaveIdNotExistHandler
 }
 
 func newServerCommon() *serverCommon {
@@ -95,6 +95,11 @@ func (sf *serverCommon) RegisterFunctionHandler(funcCode uint8, function Functio
 	if function != nil {
 		sf.function[funcCode] = function
 	}
+}
+
+// 注册slaveID不存在处理函数.
+func (sf *serverCommon) RegisterSlaveIdNotExistHandler(handler SlaveIdNotExistHandler) {
+	sf.handlerSlaveIdNotExist = handler
 }
 
 // readBits 读位寄存器.

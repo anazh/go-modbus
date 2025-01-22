@@ -11,7 +11,12 @@ type pool struct {
 func newPool(size int) *pool {
 	return &pool{
 		&sync.Pool{
-			New: func() interface{} { return &protocolFrame{make([]byte, 0, size)} },
+			New: func() interface{} {
+				return &protocolFrame{
+					make([]byte, 0, size),
+					false,
+				}
+			},
 		},
 	}
 }

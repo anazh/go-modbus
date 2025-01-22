@@ -186,7 +186,8 @@ type ProtocolDataUnit struct {
 
 // protocolFrame protocol frame in pool
 type protocolFrame struct {
-	adu []byte
+	adu      []byte
+	isClient bool
 }
 
 // ClientProvider is the interface implements underlying methods.

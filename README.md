@@ -3,7 +3,6 @@
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
 ### Supported formats
-
 - modbus Serial(RTU) master
 - modbus Serial(RTU,ASCII) Client
 - modbus TCP Client

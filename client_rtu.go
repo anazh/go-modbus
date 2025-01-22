@@ -51,7 +51,9 @@ func (sf *protocolFrame) encodeRTUFrame(slaveID byte, pdu ProtocolDataUnit) ([]b
 	requestAdu := []byte{}
 	requestAdu = append(requestAdu, slaveID)
 	requestAdu = append(requestAdu, pdu.FuncCode)
-	requestAdu = append(requestAdu, uint8(length))
+	if sf.isClient {
+		requestAdu = append(requestAdu, uint8(length-4))
+	}
 	requestAdu = append(requestAdu, pdu.Data...)
 	checksum := CRC16(requestAdu)
 	requestAdu = append(requestAdu, byte(checksum), byte(checksum>>8))

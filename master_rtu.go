@@ -1,8 +1,7 @@
 package modbus
 
 import (
-	"net"
-	"time"
+	"go.bug.st/serial"
 )
 
 type RtuMaster struct {
@@ -15,50 +14,71 @@ func NewRtuMaster(r *RTUClientProvider) *RtuMaster {
 	return &RtuMaster{
 		conn:         r,
 		serverCommon: newServerCommon(),
-		logger:       newLogger("modbusTCPServer => "),
+		logger:       newLogger("modbusRTUServer => "),
 	}
+}
+func recvData(port serial.Port) (recvData []byte, err error) {
+reget:
+	buff := make([]byte, 1024)
+	n, err := port.Read(buff)
+	if err != nil {
+		return nil, err
+	}
+	if n == 0 {
+		return
+	}
+	if n > 0 {
+		recvData = append(recvData, buff[:n]...)
+		goto reget
+	}
+	return recvData, nil
 }
 
 func (m *RtuMaster) Connect() error {
 	if err := m.conn.Connect(); err != nil {
 		return err
 	}
-	var tempDelay = minTempDelay // how long to sleep on accept failure
-	buff := []byte{}
 	for {
-		allLen := 0
-	reget:
-		newBuff := make([]byte, rtuAduMaxSize)
-		n, err := m.conn.port.Read(newBuff)
+		recvData, err := recvData(m.conn.port)
 		if err != nil {
-			if ne, ok := err.(net.Error); ok && ne.Temporary() {
-				tempDelay <<= 1
-				if max := 1 * time.Second; tempDelay > max {
-					tempDelay = max
-				}
-				time.Sleep(tempDelay)
-				continue
-			}
+			m.logger.Errorf("recvData error:%v", err)
 			return err
 		}
-		if n != 0 {
-			allLen += n
-			buff = append(buff, newBuff[:n]...)
-			if allLen < rtuAduMinSize {
-				goto reget
-			}
-		} else if allLen == 0 {
+		if len(recvData) == 0 {
 			continue
 		}
-		// ---------------------------
-		data := buff[:allLen]
-		buff = []byte{}
-		tempDelay = minTempDelay
 		sess := &MasterSession{
 			m.conn.port,
 			m.serverCommon,
 			m.logger,
 		}
-		sess.frameHandler(data)
+		sess.frameHandler(recvData)
 	}
+	// for {
+	// 	allLen := 0
+	// reget:
+	// 	newBuff := make([]byte, rtuAduMaxSize)
+	// 	n, err := m.conn.port.Read(newBuff)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	if n != 0 {
+	// 		allLen += n
+	// 		buff = append(buff, newBuff[:n]...)
+	// 		if allLen < rtuAduMinSize {
+	// 			goto reget
+	// 		}
+	// 	} else if allLen == 0 {
+	// 		continue
+	// 	}
+	// 	// ---------------------------
+	// 	data := buff[:allLen]
+	// 	buff = []byte{}
+	// 	sess := &MasterSession{
+	// 		m.conn.port,
+	// 		m.serverCommon,
+	// 		m.logger,
+	// 	}
+	// 	sess.frameHandler(data)
+	// }
 }

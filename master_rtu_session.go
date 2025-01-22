@@ -59,6 +59,7 @@ func (sf *MasterSession) frameHandler(requestAdu []byte) error {
 	}
 	sfv := protocolFrame{
 		adu: requestAdu,
+		isClient: true,
 	}
 	responseAdu, err := sfv.encodeRTUFrame(slaveId, ProtocolDataUnit{
 		FuncCode: funcCode,

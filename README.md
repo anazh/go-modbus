@@ -1,5 +1,5 @@
 # go modbus
-## NOTE: 在原有基础(things-go/go-modbus)上实现master rtu 
+## NOTE: 在原有基础(things-go/go-modbus)上实现master rtu  2025.01.22
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
 ### Supported formats
@@ -177,20 +177,3 @@ func main() {
 
 - [Modbus Specifications and Implementation Guides](http://www.modbus.org/specs.php)
 - [goburrow](https://github.com/goburrow/modbus)
-
-### JetBrains OS licenses
-go-modbus had been being developed with GoLand under the free JetBrains Open Source license(s) granted by JetBrains s.r.o., hence I would like to express my thanks here.
-
-<a href="https://www.jetbrains.com/?from=things-go/go-modbus" target="_blank"><img src="https://github.com/thinkgos/thinkgos/blob/master/asserts/jetbrains-variant-4.svg" width="200" align="middle"/></a>
-
-### Donation
-
-if package help you a lot,you can support us by:
-
-**Alipay**
-
-![alipay](https://github.com/thinkgos/thinkgos/blob/master/asserts/alipay.jpg)
-
-**WeChat Pay**
-
-![wxpay](https://github.com/thinkgos/thinkgos/blob/master/asserts/wxpay.jpg)
